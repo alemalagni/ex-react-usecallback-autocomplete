@@ -13,16 +13,22 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
         const { createRoot } = ReactDOM;
+        const { useState } = React;
 
         function ReactApp() {
+            const [search, setSearch] = useState('')
+
             return (
-                <Search />
+                <>
+                    <Search />
+                    <Result />
+                </>
             )
         }
 
         function Search() {
             return (
-                <div style={{ margin: '300px auto', width: '35%' }}>
+                <div style={{ margin: '200px auto', width: '35%' }}>
                     <input
                         type='text'
                         placeholder='Search'
@@ -31,6 +37,13 @@
                     // onChange={e => setSearch(e.target.value)} -->
                     />
                 </div>
+            )
+        }
+
+        function Result() {
+            return (
+                <>
+                </>
             )
         }
 
