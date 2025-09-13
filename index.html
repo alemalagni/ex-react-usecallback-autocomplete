@@ -20,15 +20,21 @@
             const [result, setResult] = useState([])
 
             useEffect(() => {
-                if (search != '') {
+                if (search.trim() === "") {
+                    setResult([]);
+                    return;
+                }
+
+                const handler = setTimeout(() => {
+                    console.log("Richiesta inviata");
                     fetch(`http://localhost:3333/products?search=${search}`)
                         .then(res => res.json())
                         .then(obj => setResult(obj))
-                        .catch(err => console.error('Errore nella richiesta dati:', err))
-                } else {
-                    setResult([])
-                }
-            }, [search])
+                        .catch(err => console.error("Errore nella richiesta dati:", err));
+                }, 500);
+
+                return () => clearTimeout(handler);
+            }, [search]);
 
             return (
                 <>
