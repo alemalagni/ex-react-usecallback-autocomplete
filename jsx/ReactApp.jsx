@@ -1,5 +1,4 @@
-const root = createRoot(document.querySelector(".root"));
-root.render(<ReactMain />);
+const { createRoot } = ReactDOM;
 
 function ReactApp() {
     return (
@@ -8,3 +7,6 @@ function ReactApp() {
         </div>
     )
 }
+
+const root = createRoot(document.querySelector(".root"));
+root.render(<ReactApp />);
