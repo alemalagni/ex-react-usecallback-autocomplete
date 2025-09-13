@@ -13,15 +13,23 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
         const { createRoot } = ReactDOM;
-        const { useState } = React;
+        const { useState, useEffect } = React;
 
         function ReactApp() {
             const [search, setSearch] = useState('')
+            const [result, setResult] = useState([])
+
+            useEffect(() => {
+                fetch(`http://localhost:3333/products?search=${search}`)
+                    .then(res => res.json())
+                    .then(obj => setResult(obj))
+                    .catch(err => console.error('Errore nella richiesta dati:', err))
+            }, [])
 
             return (
                 <>
                     <Search search={search} setSearch={setSearch} />
-                    <Result />
+                    <Result result={result} />
                 </>
             )
         }
@@ -33,17 +41,52 @@
                         type='text'
                         placeholder='Search'
                         style={{ width: '100%', padding: '5px' }}
-                    //<!-- value={search}
-                    // onChange={e => setSearch(e.target.value)} -->
+                        value={search}
+                        onChange={e => setSearch(e.target.value)}
                     />
                 </div>
             )
         }
 
-        function Result() {
+        function Result({ result }) {
+            // result.length > 0 ? (
+            //     <div style={{ width: '35%', margin: '20px auto', textAlign: 'left' }}>
+            //         {result.map(item => (
+            //             <div key={item.id} style={{ padding: '5px 0', borderBottom: 'solid 1px black' }}>
+            //                 {item.name}
+            //             </div>
+            //         ))}
+            //     </div>
+            // ) : (
+            //     <div style={{ width: '35%', margin: '20px auto', textAlign: 'center' }}>
+            //         Nessun risultato
+            //     </div>
+            // )
+            console.log(result)
             return (
-                <>
-                </>
+                <div style={{ display: 'flex' }}>
+                    {result.map(r => {
+                        <ResultCard key={r.id} name={r.name} image={r.image} price={r.price} />
+                    })}
+                </div>
+            )
+        }
+
+        function ResultCard({ id, name, image, price }) {
+            return (
+                <div
+                    key={id}
+                    style={{ margin: '20px auto', padding: '5px', border: 'solid 1px black', borderRadius: '5px' }}
+                >
+                    <div>
+                        <img src={image} alt={name} style={{ width: '100px' }} />
+                    </div>
+                    <div style={{ textAlign: 'center' }}>
+                        <p>{name}</p>
+                        <p style={{ fontWeight: 'bold' }}>{price} €</p>
+                    </div>
+
+                </div>
             )
         }
 
