@@ -2,8 +2,12 @@ const { createRoot } = ReactDOM;
 
 function ReactApp() {
     return (
-        <div>
-            <input type='text' />
+        <div style={{ margin: '300px auto', width: '35%' }}>
+            <input
+                type='text'
+                placeholder='Search'
+                style={{ width: '100%', padding: '5px' }}
+            />
         </div>
     )
 }
