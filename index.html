@@ -11,7 +11,32 @@
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="jsx/ReactApp.jsx" type="text/babel"></script>
+    <script type="text/babel">
+        const { createRoot } = ReactDOM;
+
+        function ReactApp() {
+            return (
+                <Search />
+            )
+        }
+
+        function Search() {
+            return (
+                <div style={{ margin: '300px auto', width: '35%' }}>
+                    <input
+                        type='text'
+                        placeholder='Search'
+                        style={{ width: '100%', padding: '5px' }}
+                    //<!-- value={search}
+                    // onChange={e => setSearch(e.target.value)} -->
+                    />
+                </div>
+            )
+        }
+
+        const root = createRoot(document.querySelector(".root"));
+        root.render(<ReactApp />);
+    </script>
 </head>
 
 <body>
