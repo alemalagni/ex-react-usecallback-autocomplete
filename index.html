@@ -20,11 +20,15 @@
             const [result, setResult] = useState([])
 
             useEffect(() => {
-                fetch(`http://localhost:3333/products?search=${search}`)
-                    .then(res => res.json())
-                    .then(obj => setResult(obj))
-                    .catch(err => console.error('Errore nella richiesta dati:', err))
-            }, [])
+                if (search != '') {
+                    fetch(`http://localhost:3333/products?search=${search}`)
+                        .then(res => res.json())
+                        .then(obj => setResult(obj))
+                        .catch(err => console.error('Errore nella richiesta dati:', err))
+                } else {
+                    setResult([])
+                }
+            }, [search])
 
             return (
                 <>
@@ -36,7 +40,7 @@
 
         function Search({ search, setSearch }) {
             return (
-                <div style={{ margin: '200px auto', width: '35%' }}>
+                <div style={{ margin: 'auto', width: '35%', marginTop: '200px' }}>
                     <input
                         type='text'
                         placeholder='Search'
@@ -49,34 +53,21 @@
         }
 
         function Result({ result }) {
-            // result.length > 0 ? (
-            //     <div style={{ width: '35%', margin: '20px auto', textAlign: 'left' }}>
-            //         {result.map(item => (
-            //             <div key={item.id} style={{ padding: '5px 0', borderBottom: 'solid 1px black' }}>
-            //                 {item.name}
-            //             </div>
-            //         ))}
-            //     </div>
-            // ) : (
-            //     <div style={{ width: '35%', margin: '20px auto', textAlign: 'center' }}>
-            //         Nessun risultato
-            //     </div>
-            // )
-            console.log(result)
+            console.log(result);
             return (
-                <div style={{ display: 'flex' }}>
-                    {result.map(r => {
-                        <ResultCard key={r.id} name={r.name} image={r.image} price={r.price} />
-                    })}
+                <div style={{ marginTop: '20px' }}>
+                    {result.map(r => (
+                        <ResultCard key={r.id} {...r} />
+                    ))}
                 </div>
-            )
+            );
         }
 
         function ResultCard({ id, name, image, price }) {
             return (
                 <div
                     key={id}
-                    style={{ margin: '20px auto', padding: '5px', border: 'solid 1px black', borderRadius: '5px' }}
+                    style={{ padding: '5px', border: 'solid 1px black', borderRadius: '5px', display: 'flex', width: '35%', margin: 'auto' }}
                 >
                     <div>
                         <img src={image} alt={name} style={{ width: '100px' }} />
