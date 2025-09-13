@@ -20,13 +20,13 @@
 
             return (
                 <>
-                    <Search />
+                    <Search search={search} setSearch={setSearch} />
                     <Result />
                 </>
             )
         }
 
-        function Search() {
+        function Search({ search, setSearch }) {
             return (
                 <div style={{ margin: '200px auto', width: '35%' }}>
                     <input
